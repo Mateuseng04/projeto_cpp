@@ -43,7 +43,7 @@ void setColor(float r, float g, float b, float alpha);
 //Funções de deseho
 void putVoxel(int x, int y, int z);
 void cutVoxel(int x, int y, int z);
-// Fuções de transformação
+// Funções de transformação
 void putBox(int x0, int x1, int y0, int y1, int z0);
 void cutBox(int x0, int x1, int y0, int y1, int z0);
 void putDisc(int xcenter, int ycenter, int zcenter, int r, int h, int axis = 1);
@@ -58,5 +58,28 @@ void writeOFF(char *filename);
 };
 
 #endif // SCULPTOR_H
-```cpp
+```
 
+### - Funções
+As funções da classe _Sculptor_ são métodos utilizados para a criação de formas geométricas  a partir de _voxels_. A seguir, um resumo das funções utilizadas neste projeto.
+
+1 - `void PutVoxel(int x, int y, int z) ` : Este método modifica os _voxels_ da matriz tridimensional v[x][y][z], mudando seus atributos **rgb** e o atributo da solidez, alterando **IsOn** para **_true_**, e, portanto, deixando-o sólido. Possui o retorno vazio.
+
+2 - ` void cutVoxel(int x, int y, int z) ` : Este método, assim como o anterior, modifica os _voxels_ da matriz v e altera os valores v[x][y][z], que correspondem às cores **rgb**. Também altera o atributo **IsOn** para _false_, tornando o sólido invisível. Possui o retorno vazio.
+
+3 - ` void putBox(int x0, int x1, int y0, int y1, int z0) ` : Este método se encarrega de construir uma caixa (um prisma de base retangular) a partir das coordenas recebidas pelo programa, em vez de um único _voxel_. Utiliza a função _PutVoxel()_ para realizar esta construção. O retorno é vazio.
+
+4 - ` void cutBox(int x0, int x1, int y0, int y1, int z0) ` :  Este método se encarrega de cortar caixas (prismas de base retangular), a partir das coordenadas recebidas, utilizando a funcção _cutVoxel()_. O retorno é vazio.
+
+5 - ` putDisc(int xcenter, int ycenter, int zcenter, int r, int h, int axis = 1) ` : Este método se encarrega de desenhar um disco no canvas de desenho, a partir das coordenadas que o programa dispõe. O método utiliza a função _putVoxel()_. Vale ressaltar que, como os _voxels_ são quadriculados, não é possível desenhar um disco perfeito com este método. O retorno é vazio.
+
+6 - ` cutDisc(int xcenter, int ycenter, int zcenter, int r, int h, int axis = 1) ` : Este método se encarrega de retirar um disco do canvas de desenho utilizando a função _cutVoxel()_. Vale salientar as imperfeições de se desenhar um disco com _voxels_ quadriculados. O retorno da função é vazio.
+
+7 - `putSphere(int xcenter, int ycenter, int zcenter, int r) ` : Este método se encarrega de desenhar uma esfra no canvas de desenho, a partir das coordenas de centro, raio e utilizando a equação da esfera. O método utiliza a função _putVoxel()_ para criar o desenho do objeto. Vale ressaltar que não é possível desenhar uma esfera perfeita com _voxels_ quadrado. O retorno é vazio.
+
+8 - `putSphere(int xcenter, int ycenter, int zcenter, int r) ` :
+Este método tem a função de retirar uma esfera do canvas de desenho. Funciona de maneira análoga ao anterior, exceto que utiliza a função _cutVoxel()_. Vale fisar, novamenta, a impossibilidade de representar uma esfera perfeita com _voxels_ quadrados. O retorno é vazio.
+
+9 - `putEllipsoid(int xcenter, int ycenter, int zcenter, int rx, int ry, int rz)`: Este método é utilizado para desenhar um elipsóide, a representação 3D de uma elipse, a partir da função _putVoxel()_ e da equação computacional do eplipsóide. Não é possível uma representação perfeita de um elipsóide com _voxels_ quadrados. O retorno é vazio.
+
+10 -`cutEllipsoid(int xcenter, int ycenter, int zcenter, int rx, int ry, int rz)`: Funciona de maneira análoga ao anterior, exceto que este funciona a partir da função _cutVoxel()_, como objetivo de remover um elipsóide do canvas de desenho, dado as coordenadas necessárias. O retono é vazio.

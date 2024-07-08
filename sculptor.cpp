@@ -6,15 +6,15 @@
 #include <cmath>
 
 struct Voxel {
-    float r, g, b, a; // Colors
-    bool isOn; // Included or not
+    float r, g, b, a; // Cores
+    bool isOn; // Incluído ou não
 };
 
 class Sculptor {
 private:
-    Voxel ***v; // 3D matrix
-    int nx, ny, nz; // Dimensions
-    float r, g, b, a; // Current drawing color
+    Voxel ***v; // matriz 3D
+    int nx, ny, nz; // Dimensões
+    float r, g, b, a; // cor do desenho atual
 public:
     Sculptor(int _nx, int _ny, int _nz);
     ~Sculptor();
@@ -30,7 +30,7 @@ public:
     void writeOFF(const char* filename);
 };
 
-// Definitions
+// Definições
 Sculptor::Sculptor(int _nx, int _ny, int _nz) {
     nx = _nx; ny = _ny; nz = _nz;
     r = g = b = a = 0.5;
