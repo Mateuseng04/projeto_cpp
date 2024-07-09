@@ -5,7 +5,7 @@
 #include <vector>
 #include <cmath>
 #include "sculptor.h"
-#include "voxel.h"
+#include "Voxel.h"
 
 // Definições
 Sculptor::Sculptor(int _nx, int _ny, int _nz) {
