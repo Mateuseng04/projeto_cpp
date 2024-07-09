@@ -2,35 +2,9 @@
 #include <fstream>
 #include <cstdlib>
 #include <string>
-#include <vector>
 #include <cmath>
+#include "sculptor.h"
 
-struct Voxel {
-    float r, g, b, a; // Cores
-    bool isOn; // Incluído ou não
-};
-
-class Sculptor {
-private:
-    Voxel ***v; // matriz 3D
-    int nx, ny, nz; // Dimensões
-    float r, g, b, a; // cor do desenho atual
-public:
-    Sculptor(int _nx, int _ny, int _nz);
-    ~Sculptor();
-    void setColor(float r, float g, float b, float a);
-    void putVoxel(int x, int y, int z);
-    void cutVoxel(int x, int y, int z);
-    void putBox(int x0, int x1, int y0, int y1, int z0, int z1);
-    void cutBox(int x0, int x1, int y0, int y1, int z0, int z1);
-    void putSphere(int xcenter, int ycenter, int zcenter, int radius);
-    void cutSphere(int xcenter, int ycenter, int zcenter, int radius);
-    void putEllipsoid(int xcenter, int ycenter, int zcenter, int rx, int ry, int rz);
-    void cutEllipsoid(int xcenter, int ycenter, int zcenter, int rx, int ry, int rz);
-    void writeOFF(const char* filename);
-};
-
-// Definições
 Sculptor::Sculptor(int _nx, int _ny, int _nz) {
     nx = _nx; ny = _ny; nz = _nz;
     r = g = b = a = 0.5;
@@ -57,6 +31,7 @@ Sculptor::~Sculptor() {
         }
         delete[] v[i];
     }
+    delete[] v;
 }
 
 void Sculptor::setColor(float r, float g, float b, float a) {
@@ -159,3 +134,53 @@ void Sculptor::writeOFF(const char* filename) {
 
     fout << "OFF\n";
 
+    int numVoxels = 0;
+    for (int i = 0; i < nx; i++) {
+        for (int j = 0; j < ny; j++) {
+            for (int k = 0; k < nz; k++) {
+                if (v[i][j][k].isOn) {
+                    numVoxels++;
+                }
+            }
+        }
+    }
+
+    fout << numVoxels * 8 << " " << numVoxels * 6 << " 0\n";
+
+    for (int i = 0; i < nx; i++) {
+        for (int j = 0; j < ny; j++) {
+            for (int k = 0; k < nz; k++) {
+                if (v[i][j][k].isOn) {
+                    fout << i - 0.5 << " " << j + 0.5 << " " << k - 0.5 << "\n"
+                         << i - 0.5 << " " << j - 0.5 << " " << k - 0.5 << "\n"
+                         << i + 0.5 << " " << j - 0.5 << " " << k - 0.5 << "\n"
+                         << i + 0.5 << " " << j + 0.5 << " " << k - 0.5 << "\n"
+                         << i - 0.5 << " " << j + 0.5 << " " << k + 0.5 << "\n"
+                         << i - 0.5 << " " << j - 0.5 << " " << k + 0.5 << "\n"
+                         << i + 0.5 << " " << j - 0.5 << " " << k + 0.5 << "\n"
+                         << i + 0.5 << " " << j + 0.5 << " " << k + 0.5 << "\n";
+                }
+            }
+        }
+    }
+
+    int voxelIndex = 0;
+    for (int i = 0; i < nx; i++) {
+        for (int j = 0; j < ny; j++) {
+            for (int k = 0; k < nz; k++) {
+                if (v[i][j][k].isOn) {
+                    int base = voxelIndex * 8;
+                    fout << "4 " << base << " " << base + 3 << " " << base + 2 << " " << base + 1 << " " << v[i][j][k].r << " " << v[i][j][k].g << " " << v[i][j][k].b << " " << v[i][j][k].a << "\n"
+                         << "4 " << base + 4 << " " << base + 5 << " " << base + 6 << " " << base + 7 << " " << v[i][j][k].r << " " << v[i][j][k].g << " " << v[i][j][k].b << " " << v[i][j][k].a << "\n"
+                         << "4 " << base << " " << base + 1 << " " << base + 5 << " " << base + 4 << " " << v[i][j][k].r << " " << v[i][j][k].g << " " << v[i][j][k].b << " " << v[i][j][k].a << "\n"
+                         << "4 " << base << " " << base + 4 << " " << base + 7 << " " << base + 3 << " " << v[i][j][k].r << " " << v[i][j][k].g << " " << v[i][j][k].b << " " << v[i][j][k].a << "\n"
+                         << "4 " << base + 3 << " " << base + 7 << " " << base + 6 << " " << base + 2 << " " << v[i][j][k].r << " " << v[i][j][k].g << " " << v[i][j][k].b << " " << v[i][j][k].a << "\n"
+                         << "4 " << base + 1 << " " << base + 2 << " " << base + 6 << " " << base + 5 << " " << v[i][j][k].r << " " << v[i][j][k].g << " " << v[i][j][k].b << " " << v[i][j][k].a << "\n";
+                    voxelIndex++;
+                }
+            }
+        }
+    }
+
+    fout.close();
+}
