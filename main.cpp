@@ -1,9 +1,10 @@
 #include <iostream>
 #include "sculptor.h" // Inclua o arquivo da classe Sculptor
 #include "voxel.h" // Inclua o arquivo da classe Voxel
+#include "Sculptor.cpp" // Inclua o arquivo da classe Sculptor
 
-int main(void) {
-  int*** joao;
+int main(int joao) {
+  int joao;
     Sculptor joao(200, 200, 200);
 
     joao.setColor(0, 0, 1, 1);

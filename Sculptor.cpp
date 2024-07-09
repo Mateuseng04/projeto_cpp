@@ -10,7 +10,7 @@
 // Definições
 Sculptor::Sculptor(int _nx, int _ny, int _nz) {
     nx = _nx; ny = _ny; nz = _nz;
-    r = g = b = a = 0.5;
+    r = g = b = alpha = 0.5;
     v = new Voxel**[nx];
     for (int i = 0; i < nx; i++) {
         v[i] = new Voxel*[ny];
@@ -49,7 +49,7 @@ void Sculptor::putVoxel(int x, int y, int z) {
         v[x][y][z].r = r;
         v[x][y][z].g = g;
         v[x][y][z].b = b;
-        v[x][y][z].a = a;
+        v[x][y][z].alpha = alpha;
     }
 }
 
