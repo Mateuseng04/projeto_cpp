@@ -2,6 +2,7 @@
 #include "sculptor.h" // Inclua o arquivo da classe Sculptor
 #include "voxel.h" // Inclua o arquivo da classe Voxel
 #include "Sculptor.cpp" // Inclua o arquivo da classe Sculptor
+#include <fstreams>
 
 int main(int joao) {
   int joao;
