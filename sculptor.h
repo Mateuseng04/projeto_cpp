@@ -1,16 +1,18 @@
 #ifndef SCULPTOR_H
 #define SCULPTOR_H
 
-class sculptor {
+class Sculptor {
 protected:
 
   int nx, ny, nz;
   float r, g, b, alpha;
+
 public:
 
-Voxel ***v; // Matriz 3d de voxels
+struct Voxel ***v;
+// Matriz 3d de voxels
 
-Sculptor();
+Sculptor(int nx_ = 1, int ny_ = 1, int nz_ = 1);
 ~Sculptor();	
 
 void setColor(float r, float g, float b, float alpha);

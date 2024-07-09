@@ -5,6 +5,7 @@
 #include <vector>
 #include <cmath>
 #include "sculptor.h"
+#include "voxel.h"
 
 // Definições
 Sculptor::Sculptor(int _nx, int _ny, int _nz) {
@@ -35,11 +36,11 @@ Sculptor::~Sculptor() {
     }
 }
 
-void Sculptor::setColor(float r, float g, float b, float a) {
+void Sculptor::setColor(float r, float g, float b, float alpha) {
     this->r = r;
     this->g = g;
     this->b = b;
-    this->a = a;
+    this->alpha = alpha;
 }
 
 void Sculptor::putVoxel(int x, int y, int z) {
@@ -125,7 +126,6 @@ void Sculptor::cutEllipsoid(int xcenter, int ycenter, int zcenter, int rx, int r
         }
     }
 }
-
 void Sculptor::writeOFF(const char* filename) {
     std::ofstream fout;
     fout.open(filename);
@@ -134,4 +134,57 @@ void Sculptor::writeOFF(const char* filename) {
     }
 
     fout << "OFF\n";
+
+    int total = 0;
+    for (int i = 0; i < nx; i++) {
+        for (int j = 0; j < ny; j++) {
+            for (int k = 0; k < nz; k++) {
+                if (v[i][j][k].isOn) {
+                    total++;
+                }
+            }
+        }
+    }
+
+    fout << total * 8 << " " << total * 6 << " 0\n";
+
+    total = 0;
+    for (int i = 0; i < nx; i++) {
+        for (int j = 0; j < ny; j++) {
+            for (int k = 0; k < nz; k++) {
+                if (v[i][j][k].isOn) {
+                    fout << i - 0.5 << " " << j + 0.5 << " " << k - 0.5 << "\n";
+                    fout << i - 0.5 << " " << j - 0.5 << " " << k - 0.5 << "\n";
+                    fout << i + 0.5 << " " << j - 0.5 << " " << k - 0.5 << "\n";
+                    fout << i + 0.5 << " " << j + 0.5 << " " << k - 0.5 << "\n";
+                    fout << i - 0.5 << " " << j + 0.5 << " " << k + 0.5 << "\n";
+                    fout << i - 0.5 << " " << j - 0.5 << " " << k + 0.5 << "\n";
+                    fout << i + 0.5 << " " << j - 0.5 << " " << k + 0.5 << "\n";
+                    fout << i + 0.5 << " " << j + 0.5 << " " << k + 0.5 << "\n";
+                    total++;
+                }
+            }
+        }
+    }
+
+    total = 0;
+    for (int i = 0; i < nx; i++) {
+        for (int j = 0; j < ny; j++) {
+            for (int k = 0; k < nz; k++) {
+                if (v[i][j][k].isOn) {
+                    int index = total * 8;
+                    fout << "4 " << index + 0 << " " << index + 3 << " " << index + 2 << " " << index + 1 << "\n";
+                    fout << "4 " << index + 4 << " " << index + 5 << " " << index + 6 << " " << index + 7 << "\n";
+                    fout << "4 " << index + 0 << " " << index + 1 << " " << index + 5 << " " << index + 4 << "\n";
+                    fout << "4 " << index + 0 << " " << index + 4 << " " << index + 7 << " " << index + 3 << "\n";
+                    fout << "4 " << index + 3 << " " << index + 7 << " " << index + 6 << " " << index + 2 << "\n";
+                    fout << "4 " << index + 1 << " " << index + 2 << " " << index + 6 << " " << index + 5 << "\n";
+                    total++;
+                }
+            }
+        }
+    }
+
+    fout.close();
+}
 
