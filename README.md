@@ -83,5 +83,3 @@ Este método tem a função de retirar uma esfera do canvas de desenho. Funciona
 9 - `putEllipsoid(int xcenter, int ycenter, int zcenter, int rx, int ry, int rz)`: Este método é utilizado para desenhar um elipsóide, a representação 3D de uma elipse, a partir da função _putVoxel()_ e da equação computacional do eplipsóide. Não é possível uma representação perfeita de um elipsóide com _voxels_ quadrados. O retorno é vazio.
 
 10 -`cutEllipsoid(int xcenter, int ycenter, int zcenter, int rx, int ry, int rz)`: Funciona de maneira análoga ao anterior, exceto que este funciona a partir da função _cutVoxel()_, como objetivo de remover um elipsóide do canvas de desenho, dado as coordenadas necessárias. O retono é vazio.
-
-11 - `void writeOFF(char *filename)`: 

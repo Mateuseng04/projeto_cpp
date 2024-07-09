@@ -4,7 +4,7 @@
 #include "Sculptor.cpp" // Inclua o arquivo da classe Sculptor
 
 int main(void) {
-  char joao;
+  int joao;
     Sculptor joao(200, 200, 200);
 
     joao.setColor(0, 0, 1, 1);
