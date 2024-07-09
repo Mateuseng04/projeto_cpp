@@ -3,7 +3,7 @@
 #include "voxel.h" // Inclua o arquivo da classe Voxel
 
 int main(void) {
-  float ***joao;
+  int*** joao;
     Sculptor joao(200, 200, 200);
 
     joao.setColor(0, 0, 1, 1);

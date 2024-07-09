@@ -8,4 +8,4 @@ struct Voxel{
 };
 
 
-#endif // VOXEL_H_INCLUDED
+#endif // VOXEL_H_INCLUSO
